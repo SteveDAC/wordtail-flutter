@@ -62,12 +62,13 @@ class Board with ChangeNotifier {
     }
 
     rootBundle.loadString('assets/words/allWords.txt').then((words) {
-      allWords = words.toUpperCase().split('\r\n').toList();
+      allWords = words.toUpperCase().split('\n').toList();
+      log('All words loaded: ${allWords.length}');
     });
 
     rootBundle.loadString('assets/words/targetWords.txt').then((words) {
-      targetWords = words.toUpperCase().split('\r\n').toList();
-
+      targetWords = words.toUpperCase().split('\n').toList();
+      log('Target words loaded: ${targetWords.length}');
       init();
     });
   }
