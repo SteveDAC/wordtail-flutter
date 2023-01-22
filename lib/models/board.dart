@@ -54,6 +54,17 @@ class Board with ChangeNotifier {
 
   Board() {
     void init() async {
+      final allWordsText =
+          await rootBundle.loadString('assets/words/allWords.txt');
+      final targetWordsText =
+          await rootBundle.loadString('assets/words/targetWords.txt');
+
+      allWords = allWordsText.toUpperCase().split('\n');
+      targetWords = targetWordsText.toUpperCase().split('\n');
+
+      log('allWords loaded: ${allWords.length}');
+      log('targetWords loaded: ${targetWords.length}');
+
       bool isDataLoaded = await loadData();
       if (!isDataLoaded) {
         log('No saved game data found.');
@@ -61,16 +72,7 @@ class Board with ChangeNotifier {
       }
     }
 
-    rootBundle.loadString('assets/words/allWords.txt').then((words) {
-      allWords = words.toUpperCase().split('\n').toList();
-      log('All words loaded: ${allWords.length}');
-    });
-
-    rootBundle.loadString('assets/words/targetWords.txt').then((words) {
-      targetWords = words.toUpperCase().split('\n').toList();
-      log('Target words loaded: ${targetWords.length}');
-      init();
-    });
+    init();
   }
 
   bool get gameWon => lines.where((line) => line.isCorrect).isNotEmpty;
@@ -103,7 +105,7 @@ class Board with ChangeNotifier {
     notifyListeners();
   }
 
-  void validateWord() {
+  Future<void> validateWord() async {
     var word = targetWord;
 
     if (word.length != 5) {
@@ -111,10 +113,18 @@ class Board with ChangeNotifier {
       return;
     }
 
-    var result = lines[currentLine].validateWord(word);
+    var tmpLine = lines[currentLine].copy();
+
+    var result = tmpLine.validateWord(word);
     correctLetters.addAll(result[CellState.correct] as Set<String>);
     incorrectLetters.addAll(result[CellState.incorrect] as Set<String>);
     misplacedLetters = result[CellState.misplaced] as Set<String>;
+
+    for (int i = 0; i < tmpLine.cells.length; i++) {
+      lines[currentLine].cells[i] = tmpLine.cells[i];
+      notifyListeners();
+      await Future.delayed(const Duration(milliseconds: 200));
+    }
 
     log('correctLetters: $correctLetters');
     log('incorrectLetters: $incorrectLetters');

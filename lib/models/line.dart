@@ -87,6 +87,14 @@ class Line {
     };
   }
 
+  Line copy() {
+    final line = Line();
+    for (int i = 0; i < cells.length; i++) {
+      line.cells[i] = cells[i].copy();
+    }
+    return line;
+  }
+
   factory Line.fromJson(Map<String, Object?> json) => _$LineFromJson(json);
   Map<String, dynamic> toJson() => _$LineToJson(this);
 }

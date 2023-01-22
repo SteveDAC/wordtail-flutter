@@ -37,7 +37,7 @@ class _KeyboardState extends State<Keyboard> {
   ) {
     var scaffold = ScaffoldMessenger.of(context);
 
-    void submitWord() {
+    void submitWord() async {
       if (!widget.board.allWords.contains(_currentWord)) {
         scaffold.clearSnackBars();
         scaffold.showSnackBar(SnackBar(
@@ -56,7 +56,7 @@ class _KeyboardState extends State<Keyboard> {
       }
 
       clearBuffer();
-      widget.board.validateWord();
+      await widget.board.validateWord();
     }
 
     void keyPressed(String key) {
@@ -68,6 +68,9 @@ class _KeyboardState extends State<Keyboard> {
           break;
 
         case 'DELETE':
+          if (_currentWord.isEmpty) {
+            return;
+          }
           _currentWord = _currentWord.substring(0, _currentWord.length - 1);
           widget.board.setWord(_currentWord);
           break;
