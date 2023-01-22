@@ -114,17 +114,16 @@ class Board with ChangeNotifier {
     }
 
     var tmpLine = lines[currentLine].copy();
-
     var result = tmpLine.validateWord(word);
-    correctLetters.addAll(result[CellState.correct] as Set<String>);
-    incorrectLetters.addAll(result[CellState.incorrect] as Set<String>);
-    misplacedLetters = result[CellState.misplaced] as Set<String>;
-
     for (int i = 0; i < tmpLine.cells.length; i++) {
       lines[currentLine].cells[i] = tmpLine.cells[i];
       notifyListeners();
       await Future.delayed(const Duration(milliseconds: 300));
     }
+
+    correctLetters.addAll(result[CellState.correct] as Set<String>);
+    incorrectLetters.addAll(result[CellState.incorrect] as Set<String>);
+    misplacedLetters = result[CellState.misplaced] as Set<String>;
 
     log('correctLetters: $correctLetters');
     log('incorrectLetters: $incorrectLetters');
