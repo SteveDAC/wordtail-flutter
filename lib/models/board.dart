@@ -123,7 +123,7 @@ class Board with ChangeNotifier {
     for (int i = 0; i < tmpLine.cells.length; i++) {
       lines[currentLine].cells[i] = tmpLine.cells[i];
       notifyListeners();
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 300));
     }
 
     log('correctLetters: $correctLetters');
