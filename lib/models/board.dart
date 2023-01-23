@@ -51,6 +51,7 @@ class Board with ChangeNotifier {
   bool isGameOver = true;
   List<String> allWords = [];
   List<String> targetWords = [];
+  bool isValidating = false;
 
   Board() {
     void init() async {
@@ -113,6 +114,8 @@ class Board with ChangeNotifier {
       return;
     }
 
+    isValidating = true;
+
     var tmpLine = lines[currentLine].copy();
     var result = tmpLine.validateWord(word);
     for (int i = 0; i < tmpLine.cells.length; i++) {
@@ -139,6 +142,7 @@ class Board with ChangeNotifier {
       clearSavedData();
     }
 
+    isValidating = false;
     notifyListeners();
   }
 

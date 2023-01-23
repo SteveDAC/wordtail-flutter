@@ -1,5 +1,6 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'dart:developer' show log;
+import 'package:provider/provider.dart';
 
 import '../models/cell_state.dart';
 import '../models/board.dart';
@@ -56,10 +57,15 @@ class _KeyboardState extends State<Keyboard> {
       }
 
       clearBuffer();
-      await widget.board.validateWord();
+      widget.board.validateWord();
     }
 
-    void keyPressed(String key) {
+    void keyPressed(String key) async {
+      if (Provider.of<Board>(context, listen: false).isValidating) {
+        log('Validating so exit.');
+        return;
+      }
+
       switch (key) {
         case 'ENTER':
           if (_currentWord.length == 5) {
