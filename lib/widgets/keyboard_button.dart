@@ -33,7 +33,7 @@ class KeyboardButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             color: keyColors[buttonState],
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(7),
             border: Border.all(
               width: 1,
               color: Colors.black54,

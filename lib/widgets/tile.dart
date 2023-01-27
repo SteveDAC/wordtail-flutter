@@ -25,6 +25,9 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isInput =
+        (cell.letter.isNotEmpty && cell.cellState == CellState.none);
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.linear,
@@ -33,7 +36,10 @@ class Tile extends StatelessWidget {
       margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        border: Border.all(width: 2, color: Colors.grey.shade900),
+        border: Border.all(
+          width: 2,
+          color: isInput ? Colors.white : const Color.fromRGBO(35, 35, 35, 1),
+        ),
         borderRadius: BorderRadius.circular(10),
         color: cellStateColors[cell.cellState],
         gradient: stateGradient(cell),
@@ -41,14 +47,13 @@ class Tile extends StatelessWidget {
       ),
       child: FittedBox(
         fit: BoxFit.contain,
-        child: Text(cell.letter,
-            style: const TextStyle(
-              color: Colors.white,
-              // color: cell.cellState != CellState.none
-              //     ? Colors.white
-              //     : Colors.black,
-              fontSize: 35,
-            )),
+        child: Text(
+          cell.letter,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 35,
+          ),
+        ),
       ),
     );
   }

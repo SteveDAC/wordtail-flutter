@@ -7,9 +7,9 @@ enum CellState {
   none,
 }
 
-Map<CellState, Color> cellStateColors = {
+const Map<CellState, Color> cellStateColors = {
   CellState.correct: Colors.green,
-  CellState.incorrect: Colors.grey.shade900,
+  CellState.incorrect: Color.fromRGBO(35, 35, 35, 1),
   CellState.misplaced: Colors.amber,
   CellState.none: Colors.black,
 };
