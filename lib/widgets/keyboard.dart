@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,15 +21,59 @@ class Keyboard extends StatefulWidget {
 }
 
 class _KeyboardState extends State<Keyboard> {
-  var firstRow = 'QWERTYUIOP'.split('');
-  var secondRow = 'ASDFGHJKL'.split('');
-  var thirdRow = '+ZXCVBNM-'.split('');
+  final FToast fToast = FToast();
+  final firstRow = 'QWERTYUIOP'.split('');
+  final secondRow = 'ASDFGHJKL'.split('');
+  final thirdRow = '+ZXCVBNM-'.split('');
 
   String _currentWord = '';
+
+  @override
+  void didUpdateWidget(covariant Keyboard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    fToast.init(context);
+  }
 
   void clearBuffer() {
     log('Keyboard: Clearing buffer.');
     _currentWord = '';
+  }
+
+  Widget toast({required String message, IconData? icon}) {
+    return Material(
+      borderRadius: BorderRadius.circular(25.0),
+      elevation: 3,
+      shadowColor: Colors.black,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0),
+          color: Colors.red.shade900,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(
+                icon,
+                color: Colors.white,
+                size: 48,
+              ),
+              const SizedBox(width: 12.0)
+            ],
+            Text(
+              message,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              softWrap: true,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   List<Widget> _buildRowButtons(
@@ -36,23 +81,19 @@ class _KeyboardState extends State<Keyboard> {
     List<String> keys,
     Map<CellState, Set<String>> keyStates,
   ) {
-    var scaffold = ScaffoldMessenger.of(context);
-
     void submitWord() async {
       if (!widget.board.allWords.contains(_currentWord)) {
-        scaffold.clearSnackBars();
-        scaffold.showSnackBar(SnackBar(
-            content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Theme.of(context).errorColor,
-            ),
-            const SizedBox(width: 5),
-            const Text('Your word is not in the dictionary.'),
-          ],
-        )));
+        fToast.removeCustomToast();
+        fToast.removeQueuedCustomToasts();
+        fToast.showToast(
+          child: toast(
+            message: 'Your word is not in the dictionary.',
+            icon: Icons.error,
+          ),
+          fadeDuration: const Duration(milliseconds: 300),
+          toastDuration: const Duration(milliseconds: 1500),
+          gravity: ToastGravity.CENTER,
+        );
         return;
       }
 

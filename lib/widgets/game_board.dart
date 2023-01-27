@@ -28,14 +28,19 @@ class GameBoard extends StatelessWidget {
     } else {
       Wakelock.enable();
     }
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 10,
-        left: 5,
-        right: 5,
-      ),
-      child: Column(
-        children: board.lines.map(((row) => _buildRow(row))).toList(),
+    return Card(
+      elevation: 16,
+      margin: const EdgeInsets.only(top: 20),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 15,
+          left: 15,
+          right: 15,
+          bottom: 15,
+        ),
+        child: Column(
+          children: board.lines.map(((row) => _buildRow(row))).toList(),
+        ),
       ),
     );
   }

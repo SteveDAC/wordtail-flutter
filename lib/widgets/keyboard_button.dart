@@ -14,7 +14,7 @@ class KeyboardButton extends StatelessWidget {
   final keyColors = {
     CellState.correct: Colors.green,
     CellState.incorrect: Colors.grey.shade900,
-    CellState.misplaced: Colors.amber,
+    CellState.misplaced: Colors.amber.shade700,
     CellState.none: const Color.fromRGBO(36, 59, 71, 1),
   };
 
@@ -30,6 +30,7 @@ class KeyboardButton extends StatelessWidget {
       height: 59,
       margin: const EdgeInsets.all(1),
       child: Material(
+        borderRadius: BorderRadius.circular(7),
         child: Ink(
           decoration: BoxDecoration(
             color: keyColors[buttonState],
