@@ -65,7 +65,6 @@ class _KeyboardState extends State<Keyboard> {
               message,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               softWrap: true,
@@ -91,7 +90,7 @@ class _KeyboardState extends State<Keyboard> {
             icon: Icons.error,
           ),
           fadeDuration: const Duration(milliseconds: 300),
-          toastDuration: const Duration(milliseconds: 1500),
+          toastDuration: const Duration(seconds: 1, milliseconds: 700),
           gravity: ToastGravity.CENTER,
         );
         return;

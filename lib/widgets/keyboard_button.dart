@@ -14,7 +14,7 @@ class KeyboardButton extends StatelessWidget {
   final keyColors = {
     CellState.correct: Colors.green,
     CellState.incorrect: Colors.grey.shade900,
-    CellState.misplaced: Colors.amber.shade700,
+    CellState.misplaced: const Color.fromRGBO(202, 154, 11, 1),
     CellState.none: const Color.fromRGBO(36, 59, 71, 1),
   };
 

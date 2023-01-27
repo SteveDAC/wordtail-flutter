@@ -38,7 +38,7 @@ class Tile extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
-          color: isInput ? Colors.white : const Color.fromRGBO(35, 35, 35, 1),
+          color: isInput ? Colors.white : const Color.fromRGBO(40, 40, 40, 1),
         ),
         borderRadius: BorderRadius.circular(10),
         color: cellStateColors[cell.cellState],
